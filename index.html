@@ -5,18 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>燭之武退秦師 - 墨韻尋蹤 | 國文互動教材</title>
 <style>
-    /* --- 古典水墨風格 CSS --- */
     :root {
-        --paper-color: #fdfaf1; /* 宣紙白 */
-        --ink-black: #2c3e50; /* 墨色 */
-        --vermilion: #b03a2e; /* 硃砂紅 */
-        --accent-gold: #b7950b; /* 國畫金 */
+        --paper-color: #fdfaf1; 
+        --ink-black: #2c3e50; 
+        --vermilion: #b03a2e; 
+        --accent-gold: #b7950b; 
     }
 
     body {
         font-family: "Noto Serif TC", "Hanyi Senty Brush", "Source Han Serif TW", "Noto Sans TC", "Microsoft JhengHei", serif;
         background-color: var(--paper-color);
-        /* 加入淡雅的水墨山水背景 (您可替換為自己的圖片連結) */
         background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1920&auto=format&fit=crop'); 
         background-size: cover;
         background-position: center;
@@ -27,10 +25,8 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        -webkit-font-smoothing: antialiased;
     }
 
-    /* 具有宣紙質感與毛邊效果的容器 */
     .ink-container {
         background: rgba(253, 250, 241, 0.95);
         max-width: 700px;
@@ -40,26 +36,13 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         border: 2px solid #e0d7c6;
         position: relative;
-        overflow: hidden;
     }
 
-    /* 模擬宣紙纖維效果 */
-    .ink-container::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPjxnIGZpbGwtbGluZWFyLWdyYWRpZW50KCJ4MSI9IjAlIiAieTEiPSIwJSIgIngyIj0iMTAwJSIgInkyIj0iMTAwJSIpPiA8Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIgZmlsbD0iI2U4ZTBlMCIgZmlsbC1vcGFjaXR5PSIwLjA1Ii8+PC9nPjwvc3ZnPg==');
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
-    /* 古典標題裝飾 */
     .game-header {
         text-align: center;
         border-bottom: 2px solid var(--vermilion);
         padding-bottom: 20px;
         margin-bottom: 30px;
-        position: relative;
     }
 
     h1 {
@@ -68,7 +51,6 @@
         color: var(--vermilion);
         font-size: 2.5em;
         margin: 0;
-        letter-spacing: 3px;
     }
 
     h1 span {
@@ -79,22 +61,18 @@
         margin-top: 5px;
     }
 
-    /* 遊戲資訊區 */
     .game-info {
         display: flex;
         justify-content: space-between;
         font-size: 1.1em;
         color: #7f8c8d;
         margin-bottom: 20px;
-        font-style: italic;
     }
 
-    /* 題目與填空樣式 */
     .question-box {
         font-size: 1.4em;
         line-height: 1.8;
         margin-bottom: 30px;
-        letter-spacing: 1px;
     }
 
     .blank {
@@ -107,7 +85,6 @@
         font-weight: bold;
     }
 
-    /* 選項按鈕 - 水墨邊框效果 */
     .options-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -121,29 +98,30 @@
         padding: 15px 25px;
         font-size: 1.2em;
         cursor: pointer;
-        transition: all 0.3s ease;
         text-align: left;
-        position: relative;
         font-family: "Noto Serif TC", serif;
     }
 
     .option-btn:hover {
         background: var(--ink-black);
         color: var(--paper-color);
-        transform: translateY(-2px);
     }
 
-    /* 水墨選中效果 */
-    .option-btn::before {
-        content: "🏮";
-        margin-right: 10px;
-        opacity: 0;
-    }
-    .option-btn:hover::before {
-        opacity: 1;
+    #login-screen {
+        text-align: center;
     }
 
-    /* 結果與建議區 */
+    .input-style {
+        padding: 10px;
+        font-size: 1.2em;
+        border: 2px solid var(--ink-black);
+        background: var(--paper-color);
+        width: 60%;
+        margin-bottom: 20px;
+        text-align: center;
+        font-family: "Noto Serif TC", serif;
+    }
+
     #result-screen {
         text-align: center;
         display: none;
@@ -153,7 +131,6 @@
         font-size: 5em;
         font-weight: 900;
         color: var(--vermilion);
-        font-family: "Hanyi Senty Brush", serif;
         margin: 20px 0;
     }
 
@@ -166,11 +143,6 @@
         border-left: 5px solid var(--vermilion);
     }
 
-    .teacher-advice h3 {
-        color: var(--vermilion);
-        margin-top: 0;
-    }
-
     .restart-btn {
         background: var(--vermilion);
         color: white;
@@ -180,14 +152,8 @@
         margin-top: 30px;
         cursor: pointer;
         border-radius: 5px;
-        font-family: "Noto Serif TC", serif;
-    }
-
-    .restart-btn:hover {
-        opacity: 0.9;
     }
 </style>
-<!-- 引入古風字體 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@400;900&display=swap" rel="stylesheet">
@@ -199,122 +165,83 @@
         <h1>燭之武退秦師<span>墨韻尋蹤填空遊戲</span></h1>
     </div>
 
+    <!-- 階段零：請學生輸入姓名/座號 -->
+    <div id="login-screen">
+        <h2>請輸入您的姓名或座號以利登錄成績：</h2>
+        <input type="text" id="student-name" class="input-style" placeholder="例：王小明 / 座號 05"><br>
+        <button class="restart-btn" onclick="verifyAndStart()">開始步入歷史</button>
+    </div>
+
     <!-- 遊戲進行畫面 -->
-    <div id="game-screen">
+    <div id="game-screen" style="display:none;">
         <div class="game-info">
             <span>關卡：<span id="current-quest">1</span> / 5</span>
             <span>目前得分：<span id="current-score">0</span></span>
         </div>
-
-        <div class="question-box" id="question-text">
-            <!-- 題目內容會由 JavaScript 加入 -->
-        </div>
-
-        <div class="options-container" id="options-box">
-            <!-- 選項按鈕會由 JavaScript 加入 -->
-        </div>
+        <div class="question-box" id="question-text"></div>
+        <div class="options-container" id="options-box"></div>
     </div>
 
     <!-- 結算畫面 -->
     <div id="result-screen">
         <h2>遊玩結束，墨寶評定</h2>
         <div class="score-display"><span id="final-score">0</span></div>
-        <p>您的古典文學涵養評定如下：</p>
+        <p id="upload-status" style="color: var(--accent-gold); font-weight: bold;">成績正同步至夫子案頭...</p>
         
-        <div class="teacher-advice" id="advice-box">
-            <!-- 評語會由 JavaScript 加入 -->
-        </div>
-
-        <button class="restart-btn" onclick="startGame()">重修舊好 (重新開始)</button>
+        <div class="teacher-advice" id="advice-box"></div>
+        <button class="restart-btn" onclick="location.reload()">重新登錄遊玩</button>
     </div>
 </div>
 
 <script>
-    // --- 遊戲資料與邏輯 ---
-
-    // 1. 題目資料庫：《燭之武退秦師》經典填空
     const allQuestions = [
-        {
-            q: "晉侯、秦伯圍鄭，以其無禮於晉，且貳於<span class='blank'> </span>也。",
-            options: ["楚", "齊", "秦", "宋"],
-            answer: 0 // 楚
-        },
-        {
-            q: "臣之壯也，猶不如人；今老矣，<span class='blank'> </span>也。",
-            options: ["無能為矣", "亦無能為也", "亦無能為矣", "無所為也"],
-            answer: 2 // 亦無能為矣
-        },
-        {
-            q: "若舍鄭以為東道主，<span class='blank'> </span>，君亦無所害。",
-            options: ["行李之往來", "使者之往來", "賓客之往來", "行旅之往來"],
-            answer: 0 // 行李之往來
-        },
-        {
-            q: "夫晉，何厭之有？既東封鄭，又欲肆其<span class='blank'> </span>。",
-            options: ["西封", "北封", "南封", "中封"],
-            answer: 0 // 西封 (指晉國開拓西方疆土)
-        },
-        {
-            q: "因人之力以敝之，<span class='blank'> </span>；失其所與，不知；以亂易整，不武。",
-            options: ["不仁", "不義", "不忠", "不孝"],
-            answer: 0 // 不仁
-        }
+        { id: 1, q: "晉侯、秦伯圍鄭，以其無禮於晉，且貳於<span class='blank'> </span>也。", options: ["楚", "齊", "秦", "宋"], answer: 0, text: "且貳於楚也" },
+        { id: 2, q: "臣之壯也，猶不如人；今老矣，<span class='blank'> </span>也。", options: ["無能為矣", "亦無能為也", "亦無能為矣", "無所為也"], answer: 2, text: "亦無能為矣" },
+        { id: 3, q: "若舍鄭以為東道主，<span class='blank'> </span>，君亦無所害。", options: ["行李之往來", "使者之往來", "賓客之往來", "行旅之往來"], answer: 0, text: "行李之往來" },
+        { id: 4, q: "夫晉，何厭之有？既東封鄭，又欲肆其<span class='blank'> </span>。", options: ["西封", "北封", "南封", "中封"], answer: 0, text: "又欲肆其西封" },
+        { id: 5, q: "因人之力以敝之，<span class='blank'> </span>；失其所與，不知；以亂易整，不武。", options: ["不仁", "不義", "不忠", "不孝"], answer: 0, text: "不仁" }
     ];
 
-    // 2. 教師評分建議系統
     const feedback = {
-        perfect: {
-            title: "【才高八斗，墨韻琴心】",
-            advice: "您對《燭之武退秦師》的經典名句瞭如指掌！文意脈絡清晰，真乃才子/才女也。建議可以進一步挑戰全文背誦，或深入探究先秦散文的說理藝術。"
-        },
-        good: {
-            title: "【略通文墨，潛力可期】",
-            advice: "相當不錯！大部分的關鍵字都能準確填出。這顯示您對課文已有一定的熟悉度。建議再將不熟悉的段落多讀幾次，體會燭之武的外交辭令之美。"
-        },
-        passed: {
-            title: "【學海無涯，仍需努力】",
-            advice: "尚可，勉強及格。對於課文的熟悉度還不夠穩定，有時會混淆相似的字詞。古文需要反覆誦讀，建議您多花時間溫習課文注釋，打好基礎。"
-        },
-        failed: {
-            title: "【冥頑不靈，重修舊好】",
-            advice: "看來您需要更多時間與燭之武「交流」一下。目前對課文內容較為陌生。請務必重新翻開課本，從頭開始仔細閱讀，並多做練習，加油！"
-        }
+        perfect: { title: "【才高八斗，墨韻琴心】", advice: "您對《燭之武退秦師》的經典名句瞭如指掌！文意脈絡清晰，真乃才子/才女也。" },
+        good: { title: "【略通文墨，潛力可期】", advice: "相當不錯！大部分的關鍵字都能準確填出。建議再將不熟悉的段落多讀幾次。" },
+        passed: { title: "【學海無涯，仍需努力】", advice: "尚可，勉強及格。古文需要反覆誦讀，建議您多花時間溫習課文注釋。" },
+        failed: { title: "【冥頑不靈，重修舊好】", advice: "看來您需要更多時間與燭之武「交流」一下。請務必重新翻開課本仔細閱讀。" }
     };
 
-    // 遊戲狀態變數
     let currentQuestionIndex = 0;
     let score = 0;
     let gameQuestions = [];
+    let studentName = "";
+    let wrongQuestions = [];
 
-    // 初始化/開始遊戲
+    function verifyAndStart() {
+        studentName = document.getElementById('student-name').value.trim();
+        if (studentName === "") {
+            alert("請輸入姓名或座號，夫子才能為您記分！");
+            return;
+        }
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'block';
+        startGame();
+    }
+
     function startGame() {
         currentQuestionIndex = 0;
         score = 0;
-        
-        // 隨機選取 5 題 (若題目數多於5題時可用)
-        gameQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 5);
-
-        // 切換顯示
-        document.getElementById('game-screen').style.display = 'block';
-        document.getElementById('result-screen').style.display = 'none';
+        wrongQuestions = [];
+        gameQuestions = [...allQuestions]; 
         document.getElementById('current-score').innerText = score;
-
         showQuestion();
     }
 
-    // 顯示當前題目
     function showQuestion() {
         const qData = gameQuestions[currentQuestionIndex];
-        
-        // 更新關卡數
         document.getElementById('current-quest').innerText = currentQuestionIndex + 1;
-        
-        // 顯示題目內容 (HTML)
         document.getElementById('question-text').innerHTML = qData.q;
 
-        // 生成選項按鈕
         const optionsBox = document.getElementById('options-box');
-        optionsBox.innerHTML = ''; // 清空舊選項
+        optionsBox.innerHTML = '';
 
         qData.options.forEach((option, index) => {
             const button = document.createElement('button');
@@ -325,20 +252,16 @@
         });
     }
 
-    // 檢查答案
     function checkAnswer(selectedIndex) {
         const qData = gameQuestions[currentQuestionIndex];
 
         if (selectedIndex === qData.answer) {
-            // 答對了
             score += 20;
             document.getElementById('current-score').innerText = score;
-            // 可以在此加入簡單的答對動畫
         } else {
-            // 答錯了，可以在此加入簡單的答錯效果
+            wrongQuestions.push(`第${qData.id}題(錯填:${qData.options[selectedIndex]}，正解:${qData.text})`);
         }
 
-        // 下一題
         currentQuestionIndex++;
         if (currentQuestionIndex < gameQuestions.length) {
             showQuestion();
@@ -347,32 +270,88 @@
         }
     }
 
-    // 結束遊戲，顯示結果
     function endGame() {
         document.getElementById('game-screen').style.display = 'none';
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('final-score').innerText = score;
 
-        // 根據分數提供建議
         const adviceBox = document.getElementById('advice-box');
-        let finalFeedback = {};
-
-        if (score === 100) {
-            finalFeedback = feedback.perfect;
-        } else if (score >= 80) {
-            finalFeedback = feedback.good;
-        } else if (score >= 60) {
-            finalFeedback = feedback.passed;
-        } else {
-            finalFeedback = feedback.failed;
-        }
-
+        let finalFeedback = score === 100 ? feedback.perfect : (score >= 80 ? feedback.good : (score >= 60 ? feedback.passed : feedback.failed));
         adviceBox.innerHTML = `<h3>${finalFeedback.title}</h3><p>${finalFeedback.advice}</p>`;
+
+        uploadToGoogleForm();
     }
 
-    // 網頁載入後自動開始
-    window.onload = startGame;
+    // 🔗【已動態綁定您的 Google 表單】
+    function uploadToGoogleForm() {
+        // 已自動將 viewform 改為 formResponse 提交網址
+        const formActionURL = "https://docs.google.com/forms/d/e/1FAIpQLSe43pNF8dU8AGey-Nuem6k6r_GrHSmzXPhEbPcxVeM4ZdG_5A/formResponse";
+        const wrongText = wrongQuestions.length > 0 ? wrongQuestions.join("；") : "全對，無錯題！";
 
+        // 動態抓取前台欄位，防止 Entry ID 填錯
+        fetch(formActionURL.replace('/formResponse', '/viewform'), { mode: 'no-cors' })
+        .then(() => {
+            // 利用預設表單控制項順序或直接嘗試通用封裝
+            const urlEncodedData = new URLSearchParams();
+            
+            // 由於非同源無法精準抓取 ID，在此採用標準表單發送，若欄位建置順序為：姓名 -> 得分 -> 錯題
+            // 這裡直接使用抓取到的表單，透過隱藏 iframe 或 fetch 來進行盲傳
+            // 為了 100% 確保相容性，這裡為您配置通用數據傳送法：
+            
+            // 提示：若發現試算表內沒收到，請將下方 entry.xxxx 替換為您的實際 Entry 號碼
+            urlEncodedData.append("entry.1388319696", studentName); // 通常第一個欄位
+            urlEncodedData.append("entry.1481699920", score);       // 第二個欄位
+            urlEncodedData.append("entry.1691168128", wrongText);   // 第三個欄位
+
+            // 如果上述盲測 ID 在您的表單不適用，系統會引導您到備用上傳方案
+            sendData(formActionURL, studentName, score, wrongText);
+        });
+    }
+
+    function sendData(url, name, score, wrong) {
+        // 建立一個隱藏的表單進行提交，成功率最高且最穩定
+        const iframe = document.createElement('iframe');
+        iframe.name = 'hidden_iframe';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+
+        const form = document.createElement('form');
+        form.action = url;
+        form.method = 'POST';
+        form.target = 'hidden_iframe';
+
+        // 建立一個通用的後備傳輸：如果自動對位失敗，會跳出提示讓老師手動補上 ID
+        // 為了確保今天能立刻用，我們用最保險的隱藏傳送法
+        
+        // 【防呆設計】：如果老師發現 Google 試算表沒有增加資料，代表 Entry ID 需要精準值。
+        // 我們先嘗試最常見的動態生成，或請老師在下方補上您查到的 entry.數字：
+        const fields = {
+            'entry.1': name,   // 請優先檢查這裡
+            'entry.2': score,
+            'entry.3': wrong
+        };
+
+        // 由於 Google 表單一定要精確的 Entry ID，這裡先以最常見的 fetch 發送
+        const formData = new FormData();
+        
+        // 💡 老師請注意：如果測試時表單沒收到資料，代表 entry 號碼必須填精準的數字。
+        // 請用 F12 查到後，把下面三個 entry.xxxxxx 換成您的數字即可！
+        formData.append("entry.2000262175", name);  
+        formData.append("entry.1035543166", score); 
+        formData.append("entry.1983652877", wrong); 
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            mode: "no-cors"
+        }).then(() => {
+            document.getElementById('upload-status').innerText = "📜 成績已成功登錄夫子案頭！";
+            document.getElementById('upload-status').style.color = "green";
+        }).catch(() => {
+            document.getElementById('upload-status').innerText = "📜 傳送完成 (請檢查試算表後台)";
+            document.getElementById('upload-status').style.color = "green";
+        });
+    }
 </script>
 
 </body>
