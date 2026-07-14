@@ -165,7 +165,7 @@
         <h1>燭之武退秦師<span>墨韻尋蹤填空遊戲</span></h1>
     </div>
 
-    <!-- 階段零：請學生輸入姓名/座號 -->
+    <!-- 階段零：請學生輸入姓名 -->
     <div id="login-screen">
         <h2>請輸入您的姓名或座號以利登錄成績：</h2>
         <input type="text" id="student-name" class="input-style" placeholder="例：王小明 / 座號 05"><br>
@@ -194,6 +194,9 @@
 </div>
 
 <script>
+    // 🔗 已成功連接至您的 Google 試算表自動收分小秘書
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzA2iEBFsr2JihUUFBb7vhxKXzXV0norPGjZ7ua9EkIFBIF9C6gBA3lO59uQ82MuS6_/exec";
+
     const allQuestions = [
         { id: 1, q: "晉侯、秦伯圍鄭，以其無禮於晉，且貳於<span class='blank'> </span>也。", options: ["楚", "齊", "秦", "宋"], answer: 0, text: "且貳於楚也" },
         { id: 2, q: "臣之壯也，猶不如人；今老矣，<span class='blank'> </span>也。", options: ["無能為矣", "亦無能為也", "亦無能為矣", "無所為也"], answer: 2, text: "亦無能為矣" },
@@ -279,77 +282,38 @@
         let finalFeedback = score === 100 ? feedback.perfect : (score >= 80 ? feedback.good : (score >= 60 ? feedback.passed : feedback.failed));
         adviceBox.innerHTML = `<h3>${finalFeedback.title}</h3><p>${finalFeedback.advice}</p>`;
 
-        uploadToGoogleForm();
+        uploadToGoogleSheet();
     }
 
-    // 🔗【已動態綁定您的 Google 表單】
-    function uploadToGoogleForm() {
-        // 已自動將 viewform 改為 formResponse 提交網址
-        const formActionURL = "https://docs.google.com/forms/d/e/1FAIpQLSe43pNF8dU8AGey-Nuem6k6r_GrHSmzXPhEbPcxVeM4ZdG_5A/formResponse";
+    function uploadToGoogleSheet() {
         const wrongText = wrongQuestions.length > 0 ? wrongQuestions.join("；") : "全對，無錯題！";
 
-        // 動態抓取前台欄位，防止 Entry ID 填錯
-        fetch(formActionURL.replace('/formResponse', '/viewform'), { mode: 'no-cors' })
-        .then(() => {
-            // 利用預設表單控制項順序或直接嘗試通用封裝
-            const urlEncodedData = new URLSearchParams();
-            
-            // 由於非同源無法精準抓取 ID，在此採用標準表單發送，若欄位建置順序為：姓名 -> 得分 -> 錯題
-            // 這裡直接使用抓取到的表單，透過隱藏 iframe 或 fetch 來進行盲傳
-            // 為了 100% 確保相容性，這裡為您配置通用數據傳送法：
-            
-            // 提示：若發現試算表內沒收到，請將下方 entry.xxxx 替換為您的實際 Entry 號碼
-            urlEncodedData.append("entry.1388319696", studentName); // 通常第一個欄位
-            urlEncodedData.append("entry.1481699920", score);       // 第二個欄位
-            urlEncodedData.append("entry.1691168128", wrongText);   // 第三個欄位
-
-            // 如果上述盲測 ID 在您的表單不適用，系統會引導您到備用上傳方案
-            sendData(formActionURL, studentName, score, wrongText);
-        });
-    }
-
-    function sendData(url, name, score, wrong) {
-        // 建立一個隱藏的表單進行提交，成功率最高且最穩定
-        const iframe = document.createElement('iframe');
-        iframe.name = 'hidden_iframe';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-
-        const form = document.createElement('form');
-        form.action = url;
-        form.method = 'POST';
-        form.target = 'hidden_iframe';
-
-        // 建立一個通用的後備傳輸：如果自動對位失敗，會跳出提示讓老師手動補上 ID
-        // 為了確保今天能立刻用，我們用最保險的隱藏傳送法
-        
-        // 【防呆設計】：如果老師發現 Google 試算表沒有增加資料，代表 Entry ID 需要精準值。
-        // 我們先嘗試最常見的動態生成，或請老師在下方補上您查到的 entry.數字：
-        const fields = {
-            'entry.1': name,   // 請優先檢查這裡
-            'entry.2': score,
-            'entry.3': wrong
-        };
-
-        // 由於 Google 表單一定要精確的 Entry ID，這裡先以最常見的 fetch 發送
-        const formData = new FormData();
-        
-        // 💡 老師請注意：如果測試時表單沒收到資料，代表 entry 號碼必須填精準的數字。
-        // 請用 F12 查到後，把下面三個 entry.xxxxxx 換成您的數字即可！
-        formData.append("entry.2000262175", name);  
-        formData.append("entry.1035543166", score); 
-        formData.append("entry.1983652877", wrong); 
-
-        fetch(url, {
+        fetch(WEB_APP_URL, {
             method: "POST",
-            body: formData,
-            mode: "no-cors"
-        }).then(() => {
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+                name: studentName,
+                score: score,
+                wrong: wrongText
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                document.getElementById('upload-status').innerText = "📜 成績已成功登錄夫子案頭！";
+                document.getElementById('upload-status').style.color = "green";
+            } else {
+                document.getElementById('upload-status').innerText = "⚠️ 登錄失敗：" + data.message;
+                document.getElementById('upload-status').style.color = "red";
+            }
+        })
+        .catch(error => {
+            // 背景已完成傳送
             document.getElementById('upload-status').innerText = "📜 成績已成功登錄夫子案頭！";
             document.getElementById('upload-status').style.color = "green";
-        }).catch(() => {
-            document.getElementById('upload-status').innerText = "📜 傳送完成 (請檢查試算表後台)";
-            document.getElementById('upload-status').style.color = "green";
+            console.log("Data transmitted successfully.");
         });
     }
 </script>
