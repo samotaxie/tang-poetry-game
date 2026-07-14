@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>唐詩尋蹤記 - 經典測試</title>
+    <style>
+        body {
+            font-family: "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+            background-color: #f4efe2;
+            color: #3e3321;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fcfaf2;
+            border: 2px solid #cbb89d;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            max-width: 650px;
+            width: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #8c2d19;
+            border-bottom: 2px dashed #cbb89d;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+        .progress {
+            text-align: right;
+            font-size: 0.9em;
+            color: #7a6e5d;
+            margin-bottom: 20px;
+        }
+        .question-box {
+            margin-bottom: 25px;
+        }
+        .question-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #2b2b2b;
+        }
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .option-item {
+            background-color: #fff;
+            border: 1px solid #dcd3be;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option-item:hover {
+            background-color: #f7eed6;
+            border-color: #8c2d19;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            background-color: #8c2d19;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background-color: #6a1f0f;
+        }
+        .result-view {
+            text-align: center;
+        }
+        .score-display {
+            font-size: 2.5em;
+            color: #8c2d19;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .suggestion-box {
+            background-color: #f3edd8;
+            border-left: 4px solid #8c2d19;
+            padding: 15px;
+            text-align: left;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="game-container">
+        <h1>唐詩尋蹤記 🏮</h1>
+        <div class="progress" id="progress-text">準備開始...</div>
+        
+        <div id="quiz-section" style="display: none;">
+            <div class="question-box">
+                <div class="question-text" id="question-el">題目載入中...</div>
+                <ul class="options-list" id="options-el">
+                    <!-- 選項動態生成 -->
+                </ul>
+            </div>
+        </div>
+
+        <div id="result-section" style="display: none;" class="result-view">
+            <h2>測試完成！</h2>
+            <p>您的最終得分為：</p>
+            <div class="score-display" id="score-el">0 分</div>
+            <div class="suggestion-box">
+                <strong>💡 老師的學習建議：</strong>
+                <p id="suggestion-el">分析中...</p>
+            </div>
+            <button class="btn" onclick="resetGame()">再挑戰一次</button>
+        </div>
+
+        <button class="btn" id="start-btn" onclick="startGame()">開始測試</button>
+    </div>
+</div>
+
+<script>
+    // 題庫設計：您可以自由修改、增加題目
+    const questions = [
+        {
+            q: "「落陽東渡尋芳草，借問同舟人：此去幾時回？」——請問王維《送別》中，接下來的經典名句是？",
+            options: [
+                "山中相送罷，日暮掩柴扉。",
+                "但去莫復問，白雲無盡時。",
+                "春草明年綠，王孫歸不歸？",
+                "明月松間照，清泉石上流。"
+            ],
+            answer: 2 // 索引從0開始，代表第三個
+        },
+        {
+            q: "李白《將進酒》中，哪一句展現了他極度的自信與灑脫？",
+            options: [
+                "呼兒將出換美酒，與爾同銷萬古愁。",
+                "天生我材必有用，千金散盡還復來。",
+                "人生得意須盡歡，莫使金樽空對月。",
+                "君不見高堂明鏡悲白髮，朝如青絲暮成雪。"
+            ],
+            answer: 1
+        },
+        {
+            q: "「江流石不轉，遺恨失吞吳。」這首詩杜甫是在憑弔哪一位歷史人物？",
+            options: [
+                "諸葛亮",
+                "劉備",
+                "周瑜",
+                "曹操"
+            ],
+            answer: 0
+        },
+        {
+            q: "白居易《琵琶行》中，形容樂音「短暫停頓、餘音繞梁」的經典名句是？",
+            options: [
+                "大弦嘈嘈如急雨，小弦切切如私語。",
+                "間關鶯語花底滑，幽咽泉流冰下難。",
+                "別有幽愁暗恨生，此時無聲勝有聲。",
+                "銀瓶乍破水漿迸，鐵騎突出刀槍鳴。"
+            ],
+            answer: 2
+        },
+        {
+            q: "「商女不知亡國恨，隔江猶唱後庭花。」此詩的背景「秦淮河」在哪個城市？",
+            options: [
+                "長安（西安）",
+                "金陵（南京）",
+                "洛陽",
+                "揚州"
+            ],
+            answer: 1
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    function startGame() {
+        document.getElementById('start-btn').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        currentQuestionIndex = 0;
+        score = 0;
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const progressEl = document.getElementById('progress-text');
+        progressEl.innerText = `進度：第 ${currentQuestionIndex + 1} 題 / 共 ${questions.length} 題`;
+
+        const qData = questions[currentQuestionIndex];
+        const questionEl = document.getElementById('question-el');
+        const optionsEl = document.getElementById('options-el');
+
+        questionEl.innerText = qData.q;
+        optionsEl.innerHTML = '';
+
+        qData.options.forEach((opt, index) => {
+            const li = document.createElement('li');
+            li.className = 'option-item';
+            li.innerText = opt;
+            li.onclick = () => selectOption(index);
+            optionsEl.appendChild(li);
+        });
+    }
+
+    function selectOption(selectedIndex) {
+        const qData = questions[currentQuestionIndex];
+        if (selectedIndex === qData.answer) {
+            score += 20; // 每題 20 分（共5題）
+        }
+
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('quiz-section').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('progress-text').innerText = '測試完成！';
+
+        const scoreEl = document.getElementById('score-el');
+        const suggestionEl = document.getElementById('suggestion-el');
+
+        scoreEl.innerText = `${score} 分`;
+
+        // 給予評分與學習建議
+        if (score === 100) {
+            suggestionEl.innerText = "太厲害了！你對唐詩三百首的掌握度堪稱「詩仙」級別！對於詩歌的意境、典故與格律都有極佳的敏銳度。建議接下來可以挑戰《全唐詩》中的經典名篇，或是嘗試自己動手創作近體詩，將詩意融入日常生活中。";
+        } else if (score >= 80) {
+            suggestionEl.innerText = "非常優秀！你已經具備相當紮實的唐詩基礎，能精準辨識經典名句與其背景。美中不足的是少數細節或典故稍有混淆。建議在溫習時，多留意詩人的寫作背景與文學典故（如杜甫的詠懷歷史詩），這能幫你更上一層樓！";
+        } else if (score >= 60) {
+            suggestionEl.innerText = "及格了！你對著名的唐詩句子有基本的印象，但對於詩句的後半句、詩人情感的轉折或背景理解還不夠穩定。建議可以邊讀邊背，每天挑選一首經典（如王維、孟浩然的山水田園詩），大聲朗讀出聲，培養語感。";
+        } else {
+            suggestionEl.innerText = "再接再厲！目前對唐詩的熟悉度還有很大的進步空間。別氣餒，詩歌之美需要時間品味。建議先從篇幅較短、畫面感強的五言/七言絕句（如李白、王維的作品）開始，配合翻譯故事來理解，你會發現唐詩其實非常有趣！";
+        }
+    }
+
+    function resetGame() {
+        document.getElementById('result-section').style.display = 'none';
+        startGame();
+    }
+</script>
+
+</body>
+</html>
