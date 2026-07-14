@@ -1,264 +1,378 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>唐詩尋蹤記 - 經典測試</title>
-    <style>
-        body {
-            font-family: "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
-            background-color: #f4efe2;
-            color: #3e3321;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background-color: #fcfaf2;
-            border: 2px solid #cbb89d;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            max-width: 650px;
-            width: 100%;
-            padding: 30px;
-            box-sizing: border-box;
-        }
-        h1 {
-            text-align: center;
-            color: #8c2d19;
-            border-bottom: 2px dashed #cbb89d;
-            padding-bottom: 15px;
-            margin-top: 0;
-        }
-        .progress {
-            text-align: right;
-            font-size: 0.9em;
-            color: #7a6e5d;
-            margin-bottom: 20px;
-        }
-        .question-box {
-            margin-bottom: 25px;
-        }
-        .question-text {
-            font-size: 1.2em;
-            font-weight: bold;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            color: #2b2b2b;
-        }
-        .options-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .option-item {
-            background-color: #fff;
-            border: 1px solid #dcd3be;
-            border-radius: 6px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .option-item:hover {
-            background-color: #f7eed6;
-            border-color: #8c2d19;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            background-color: #8c2d19;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 12px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 15px;
-        }
-        .btn:hover {
-            background-color: #6a1f0f;
-        }
-        .result-view {
-            text-align: center;
-        }
-        .score-display {
-            font-size: 2.5em;
-            color: #8c2d19;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        .suggestion-box {
-            background-color: #f3edd8;
-            border-left: 4px solid #8c2d19;
-            padding: 15px;
-            text-align: left;
-            border-radius: 0 8px 8px 0;
-            line-height: 1.6;
-            margin-top: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>燭之武退秦師 - 墨韻尋蹤 | 國文互動教材</title>
+<style>
+    /* --- 古典水墨風格 CSS --- */
+    :root {
+        --paper-color: #fdfaf1; /* 宣紙白 */
+        --ink-black: #2c3e50; /* 墨色 */
+        --vermilion: #b03a2e; /* 硃砂紅 */
+        --accent-gold: #b7950b; /* 國畫金 */
+    }
+
+    body {
+        font-family: "Noto Serif TC", "Hanyi Senty Brush", "Source Han Serif TW", "Noto Sans TC", "Microsoft JhengHei", serif;
+        background-color: var(--paper-color);
+        /* 加入淡雅的水墨山水背景 (您可替換為自己的圖片連結) */
+        background-image: url('https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1920&auto=format&fit=crop'); 
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: var(--ink-black);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* 具有宣紙質感與毛邊效果的容器 */
+    .ink-container {
+        background: rgba(253, 250, 241, 0.95);
+        max-width: 700px;
+        width: 90%;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border: 2px solid #e0d7c6;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* 模擬宣紙纖維效果 */
+    .ink-container::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPjxnIGZpbGwtbGluZWFyLWdyYWRpZW50KCJ4MSI9IjAlIiAieTEiPSIwJSIgIngyIj0iMTAwJSIgInkyIj0iMTAwJSIpPiA8Y2lyY2xlIGN4PSIxIiBjeT0iMSIgcj0iMSIgZmlsbD0iI2U4ZTBlMCIgZmlsbC1vcGFjaXR5PSIwLjA1Ii8+PC9nPjwvc3ZnPg==');
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    /* 古典標題裝飾 */
+    .game-header {
+        text-align: center;
+        border-bottom: 2px solid var(--vermilion);
+        padding-bottom: 20px;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    h1 {
+        font-family: "Noto Serif TC", serif;
+        font-weight: 900;
+        color: var(--vermilion);
+        font-size: 2.5em;
+        margin: 0;
+        letter-spacing: 3px;
+    }
+
+    h1 span {
+        font-weight: 300;
+        font-size: 0.7em;
+        color: var(--ink-black);
+        display: block;
+        margin-top: 5px;
+    }
+
+    /* 遊戲資訊區 */
+    .game-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.1em;
+        color: #7f8c8d;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    /* 題目與填空樣式 */
+    .question-box {
+        font-size: 1.4em;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        letter-spacing: 1px;
+    }
+
+    .blank {
+        display: inline-block;
+        width: 80px;
+        border-bottom: 2px solid var(--ink-black);
+        margin: 0 5px;
+        text-align: center;
+        color: var(--vermilion);
+        font-weight: bold;
+    }
+
+    /* 選項按鈕 - 水墨邊框效果 */
+    .options-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .option-btn {
+        background: var(--paper-color);
+        border: 2px solid var(--ink-black);
+        color: var(--ink-black);
+        padding: 15px 25px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: left;
+        position: relative;
+        font-family: "Noto Serif TC", serif;
+    }
+
+    .option-btn:hover {
+        background: var(--ink-black);
+        color: var(--paper-color);
+        transform: translateY(-2px);
+    }
+
+    /* 水墨選中效果 */
+    .option-btn::before {
+        content: "🏮";
+        margin-right: 10px;
+        opacity: 0;
+    }
+    .option-btn:hover::before {
+        opacity: 1;
+    }
+
+    /* 結果與建議區 */
+    #result-screen {
+        text-align: center;
+        display: none;
+    }
+
+    .score-display {
+        font-size: 5em;
+        font-weight: 900;
+        color: var(--vermilion);
+        font-family: "Hanyi Senty Brush", serif;
+        margin: 20px 0;
+    }
+
+    .teacher-advice {
+        background: rgba(224, 215, 198, 0.4);
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 30px;
+        text-align: left;
+        border-left: 5px solid var(--vermilion);
+    }
+
+    .teacher-advice h3 {
+        color: var(--vermilion);
+        margin-top: 0;
+    }
+
+    .restart-btn {
+        background: var(--vermilion);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        margin-top: 30px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-family: "Noto Serif TC", serif;
+    }
+
+    .restart-btn:hover {
+        opacity: 0.9;
+    }
+</style>
+<!-- 引入古風字體 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&family=Noto+Serif+TC:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-    <div id="game-container">
-        <h1>唐詩尋蹤記 🏮</h1>
-        <div class="progress" id="progress-text">準備開始...</div>
+<div class="ink-container">
+    <div class="game-header">
+        <h1>燭之武退秦師<span>墨韻尋蹤填空遊戲</span></h1>
+    </div>
+
+    <!-- 遊戲進行畫面 -->
+    <div id="game-screen">
+        <div class="game-info">
+            <span>關卡：<span id="current-quest">1</span> / 5</span>
+            <span>目前得分：<span id="current-score">0</span></span>
+        </div>
+
+        <div class="question-box" id="question-text">
+            <!-- 題目內容會由 JavaScript 加入 -->
+        </div>
+
+        <div class="options-container" id="options-box">
+            <!-- 選項按鈕會由 JavaScript 加入 -->
+        </div>
+    </div>
+
+    <!-- 結算畫面 -->
+    <div id="result-screen">
+        <h2>遊玩結束，墨寶評定</h2>
+        <div class="score-display"><span id="final-score">0</span></div>
+        <p>您的古典文學涵養評定如下：</p>
         
-        <div id="quiz-section" style="display: none;">
-            <div class="question-box">
-                <div class="question-text" id="question-el">題目載入中...</div>
-                <ul class="options-list" id="options-el">
-                    <!-- 選項動態生成 -->
-                </ul>
-            </div>
+        <div class="teacher-advice" id="advice-box">
+            <!-- 評語會由 JavaScript 加入 -->
         </div>
 
-        <div id="result-section" style="display: none;" class="result-view">
-            <h2>測試完成！</h2>
-            <p>您的最終得分為：</p>
-            <div class="score-display" id="score-el">0 分</div>
-            <div class="suggestion-box">
-                <strong>💡 老師的學習建議：</strong>
-                <p id="suggestion-el">分析中...</p>
-            </div>
-            <button class="btn" onclick="resetGame()">再挑戰一次</button>
-        </div>
-
-        <button class="btn" id="start-btn" onclick="startGame()">開始測試</button>
+        <button class="restart-btn" onclick="startGame()">重修舊好 (重新開始)</button>
     </div>
 </div>
 
 <script>
-    // 題庫設計：您可以自由修改、增加題目
-    const questions = [
+    // --- 遊戲資料與邏輯 ---
+
+    // 1. 題目資料庫：《燭之武退秦師》經典填空
+    const allQuestions = [
         {
-            q: "「落陽東渡尋芳草，借問同舟人：此去幾時回？」——請問王維《送別》中，接下來的經典名句是？",
-            options: [
-                "山中相送罷，日暮掩柴扉。",
-                "但去莫復問，白雲無盡時。",
-                "春草明年綠，王孫歸不歸？",
-                "明月松間照，清泉石上流。"
-            ],
-            answer: 2 // 索引從0開始，代表第三個
+            q: "晉侯、秦伯圍鄭，以其無禮於晉，且貳於<span class='blank'> </span>也。",
+            options: ["楚", "齊", "秦", "宋"],
+            answer: 0 // 楚
         },
         {
-            q: "李白《將進酒》中，哪一句展現了他極度的自信與灑脫？",
-            options: [
-                "呼兒將出換美酒，與爾同銷萬古愁。",
-                "天生我材必有用，千金散盡還復來。",
-                "人生得意須盡歡，莫使金樽空對月。",
-                "君不見高堂明鏡悲白髮，朝如青絲暮成雪。"
-            ],
-            answer: 1
+            q: "臣之壯也，猶不如人；今老矣，<span class='blank'> </span>也。",
+            options: ["無能為矣", "亦無能為也", "亦無能為矣", "無所為也"],
+            answer: 2 // 亦無能為矣
         },
         {
-            q: "「江流石不轉，遺恨失吞吳。」這首詩杜甫是在憑弔哪一位歷史人物？",
-            options: [
-                "諸葛亮",
-                "劉備",
-                "周瑜",
-                "曹操"
-            ],
-            answer: 0
+            q: "若舍鄭以為東道主，<span class='blank'> </span>，君亦無所害。",
+            options: ["行李之往來", "使者之往來", "賓客之往來", "行旅之往來"],
+            answer: 0 // 行李之往來
         },
         {
-            q: "白居易《琵琶行》中，形容樂音「短暫停頓、餘音繞梁」的經典名句是？",
-            options: [
-                "大弦嘈嘈如急雨，小弦切切如私語。",
-                "間關鶯語花底滑，幽咽泉流冰下難。",
-                "別有幽愁暗恨生，此時無聲勝有聲。",
-                "銀瓶乍破水漿迸，鐵騎突出刀槍鳴。"
-            ],
-            answer: 2
+            q: "夫晉，何厭之有？既東封鄭，又欲肆其<span class='blank'> </span>。",
+            options: ["西封", "北封", "南封", "中封"],
+            answer: 0 // 西封 (指晉國開拓西方疆土)
         },
         {
-            q: "「商女不知亡國恨，隔江猶唱後庭花。」此詩的背景「秦淮河」在哪個城市？",
-            options: [
-                "長安（西安）",
-                "金陵（南京）",
-                "洛陽",
-                "揚州"
-            ],
-            answer: 1
+            q: "因人之力以敝之，<span class='blank'> </span>；失其所與，不知；以亂易整，不武。",
+            options: ["不仁", "不義", "不忠", "不孝"],
+            answer: 0 // 不仁
         }
     ];
 
+    // 2. 教師評分建議系統
+    const feedback = {
+        perfect: {
+            title: "【才高八斗，墨韻琴心】",
+            advice: "您對《燭之武退秦師》的經典名句瞭如指掌！文意脈絡清晰，真乃才子/才女也。建議可以進一步挑戰全文背誦，或深入探究先秦散文的說理藝術。"
+        },
+        good: {
+            title: "【略通文墨，潛力可期】",
+            advice: "相當不錯！大部分的關鍵字都能準確填出。這顯示您對課文已有一定的熟悉度。建議再將不熟悉的段落多讀幾次，體會燭之武的外交辭令之美。"
+        },
+        passed: {
+            title: "【學海無涯，仍需努力】",
+            advice: "尚可，勉強及格。對於課文的熟悉度還不夠穩定，有時會混淆相似的字詞。古文需要反覆誦讀，建議您多花時間溫習課文注釋，打好基礎。"
+        },
+        failed: {
+            title: "【冥頑不靈，重修舊好】",
+            advice: "看來您需要更多時間與燭之武「交流」一下。目前對課文內容較為陌生。請務必重新翻開課本，從頭開始仔細閱讀，並多做練習，加油！"
+        }
+    };
+
+    // 遊戲狀態變數
     let currentQuestionIndex = 0;
     let score = 0;
+    let gameQuestions = [];
 
+    // 初始化/開始遊戲
     function startGame() {
-        document.getElementById('start-btn').style.display = 'none';
-        document.getElementById('quiz-section').style.display = 'block';
         currentQuestionIndex = 0;
         score = 0;
+        
+        // 隨機選取 5 題 (若題目數多於5題時可用)
+        gameQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 5);
+
+        // 切換顯示
+        document.getElementById('game-screen').style.display = 'block';
+        document.getElementById('result-screen').style.display = 'none';
+        document.getElementById('current-score').innerText = score;
+
         showQuestion();
     }
 
+    // 顯示當前題目
     function showQuestion() {
-        const progressEl = document.getElementById('progress-text');
-        progressEl.innerText = `進度：第 ${currentQuestionIndex + 1} 題 / 共 ${questions.length} 題`;
+        const qData = gameQuestions[currentQuestionIndex];
+        
+        // 更新關卡數
+        document.getElementById('current-quest').innerText = currentQuestionIndex + 1;
+        
+        // 顯示題目內容 (HTML)
+        document.getElementById('question-text').innerHTML = qData.q;
 
-        const qData = questions[currentQuestionIndex];
-        const questionEl = document.getElementById('question-el');
-        const optionsEl = document.getElementById('options-el');
+        // 生成選項按鈕
+        const optionsBox = document.getElementById('options-box');
+        optionsBox.innerHTML = ''; // 清空舊選項
 
-        questionEl.innerText = qData.q;
-        optionsEl.innerHTML = '';
-
-        qData.options.forEach((opt, index) => {
-            const li = document.createElement('li');
-            li.className = 'option-item';
-            li.innerText = opt;
-            li.onclick = () => selectOption(index);
-            optionsEl.appendChild(li);
+        qData.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'option-btn';
+            button.innerText = option;
+            button.onclick = () => checkAnswer(index);
+            optionsBox.appendChild(button);
         });
     }
 
-    function selectOption(selectedIndex) {
-        const qData = questions[currentQuestionIndex];
+    // 檢查答案
+    function checkAnswer(selectedIndex) {
+        const qData = gameQuestions[currentQuestionIndex];
+
         if (selectedIndex === qData.answer) {
-            score += 20; // 每題 20 分（共5題）
+            // 答對了
+            score += 20;
+            document.getElementById('current-score').innerText = score;
+            // 可以在此加入簡單的答對動畫
+        } else {
+            // 答錯了，可以在此加入簡單的答錯效果
         }
 
+        // 下一題
         currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
+        if (currentQuestionIndex < gameQuestions.length) {
             showQuestion();
         } else {
-            showResult();
+            endGame();
         }
     }
 
-    function showResult() {
-        document.getElementById('quiz-section').style.display = 'none';
-        document.getElementById('result-section').style.display = 'block';
-        document.getElementById('progress-text').innerText = '測試完成！';
+    // 結束遊戲，顯示結果
+    function endGame() {
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('final-score').innerText = score;
 
-        const scoreEl = document.getElementById('score-el');
-        const suggestionEl = document.getElementById('suggestion-el');
+        // 根據分數提供建議
+        const adviceBox = document.getElementById('advice-box');
+        let finalFeedback = {};
 
-        scoreEl.innerText = `${score} 分`;
-
-        // 給予評分與學習建議
         if (score === 100) {
-            suggestionEl.innerText = "太厲害了！你對唐詩三百首的掌握度堪稱「詩仙」級別！對於詩歌的意境、典故與格律都有極佳的敏銳度。建議接下來可以挑戰《全唐詩》中的經典名篇，或是嘗試自己動手創作近體詩，將詩意融入日常生活中。";
+            finalFeedback = feedback.perfect;
         } else if (score >= 80) {
-            suggestionEl.innerText = "非常優秀！你已經具備相當紮實的唐詩基礎，能精準辨識經典名句與其背景。美中不足的是少數細節或典故稍有混淆。建議在溫習時，多留意詩人的寫作背景與文學典故（如杜甫的詠懷歷史詩），這能幫你更上一層樓！";
+            finalFeedback = feedback.good;
         } else if (score >= 60) {
-            suggestionEl.innerText = "及格了！你對著名的唐詩句子有基本的印象，但對於詩句的後半句、詩人情感的轉折或背景理解還不夠穩定。建議可以邊讀邊背，每天挑選一首經典（如王維、孟浩然的山水田園詩），大聲朗讀出聲，培養語感。";
+            finalFeedback = feedback.passed;
         } else {
-            suggestionEl.innerText = "再接再厲！目前對唐詩的熟悉度還有很大的進步空間。別氣餒，詩歌之美需要時間品味。建議先從篇幅較短、畫面感強的五言/七言絕句（如李白、王維的作品）開始，配合翻譯故事來理解，你會發現唐詩其實非常有趣！";
+            finalFeedback = feedback.failed;
         }
+
+        adviceBox.innerHTML = `<h3>${finalFeedback.title}</h3><p>${finalFeedback.advice}</p>`;
     }
 
-    function resetGame() {
-        document.getElementById('result-section').style.display = 'none';
-        startGame();
-    }
+    // 網頁載入後自動開始
+    window.onload = startGame;
+
 </script>
 
 </body>
